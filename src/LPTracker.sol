@@ -12,8 +12,6 @@ contract LPTracker {
         positionManager = INonfungiblePositionManager(_positionManager);
     }
 
-    function FindBlock() external {}
-
     function Position(uint256 TokenId)
         public
         returns (
