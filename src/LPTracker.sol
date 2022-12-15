@@ -12,8 +12,9 @@ contract LPTracker {
         positionManager = INonfungiblePositionManager(_positionManager);
     }
 
-    function Position(uint256 TokenId)
-        public
+    function Position(uint128 TokenId)
+        external
+        view
         returns (
             int24,
             uint160,
@@ -59,13 +60,15 @@ contract LPTracker {
         );
     }
 
-    function wid(
-        uint256 tokenId,
-        uint128 liquidity,
-        uint256 amount0Min,
-        uint256 amount1Min,
-        uint256 deadline
-    ) external {
+    function wid(uint256 tokenId) external returns (bool) {
+        uint256 amount0Min = type(uint256).max;
+        uint256 amount1Min = type(uint256).max;
+        uint256 deadline = block.number + 2;
+
+        (, , , , , , , uint128 liquidity, , , , ) = positionManager.positions(
+            tokenId
+        );
+
         INonfungiblePositionManager.DecreaseLiquidityParams
             memory params = INonfungiblePositionManager
                 .DecreaseLiquidityParams({
@@ -77,5 +80,7 @@ contract LPTracker {
                 });
 
         positionManager.decreaseLiquidity(params);
+
+        return true;
     }
 }

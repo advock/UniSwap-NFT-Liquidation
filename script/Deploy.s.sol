@@ -5,13 +5,10 @@ import {Script} from "forge-std/Script.sol";
 
 import {LPTracker} from "src/LPTracker.sol";
 
-/// @notice A very simple deployment script
 contract Deploy is Script {
-    /// @notice The main script entrypoint
-    /// @return greeter The deployed contract
     function run() external returns (LPTracker lptracker) {
         vm.startBroadcast();
-        lptracker = new LPTracker("GM");
+        lptracker = new LPTracker(0xC36442b4a4522E871399CD717aBDD847Ab11FE88);
         vm.stopBroadcast();
     }
 }
